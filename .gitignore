@@ -1,0 +1,9 @@
+.idea/
+.venv/
+#app/__pycach__/
+#db/__pycach__/
+#app/db/__pycach__/
+#models/__pycach__/
+#app/models/__pycach__/
+#schemas/__pycach__/
+#app/schemas/__pycach__/
