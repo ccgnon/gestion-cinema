@@ -1,10 +1,22 @@
+##  Local Setup
+
 1. `pip install poetry` (or safer, follow the instructions: https://python-poetry.org/docs/#installation)
-2. Install dependencies `cd` into the directory where the `pyproject.toml` is located then `poetry install`
-3. Define and  active  a virtual environment `poetry install`
-4. active virtual environment `poetry shell`
-5. [UNIX]: Run the FastAPI server via poetry with the bash script: `poetry run ./run.sh`
-6. [WINDOWS]: Run the FastAPI server via poetry with the Python command: `poetry run python app/main.py`
-7. Open http://localhost:8001/
+2. `poetry config virtualenvs.in-project true` : Setup poetry to create virtual env inside the project repository
+3. Install dependencies `cd` into the directory where the `pyproject.toml` is located then `poetry install`
+4. Start your virtual env `poetry shell`
+5. [OPTIONNEL]: Initialize de db migration and configure `alembic init alembic` https://www.youtube.com/watch?v=bfelC61XKO4
+create a revision with alembic 
+`alembic revision -m "create table film and user"`
+
+modifier les fichier d'alembic pour adapter vos scripts de migrations
+
+5. [BIS]: Run the DB migrations via poetry `poetry run python prestart.py` (only required once) (Unix users can use
+the bash script if preferred)
+6. [UNIX]: Run the FastAPI server via poetry with the bash script: `poetry run ./run.sh`
+7. [WINDOWS]: Run the FastAPI server via poetry with the Python command: `poetry run python app/main.py`
+8. Open http://localhost:8001/
+ Open Swagger UI  http://localhost:8001/docs
+
 
 
 ## Links
