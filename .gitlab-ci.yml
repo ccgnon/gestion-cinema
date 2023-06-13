@@ -1,0 +1,45 @@
+ages:
+  - Build image
+  - Test acceptation
+  - Release image
+  - Deploy review
+  - Deploy staging
+  - Deploy prod
+
+docker-build:
+  # Official docker image.
+  image: docker:latest
+  stage: Build image
+  services:
+    - docker:dind
+  script:
+    - docker build -t.
+
+test acceptation:
+  # Official docker image.
+  stage: Test acceptation
+  script:
+    - docker load 
+
+release image:
+  stage: Release image
+  script:
+  
+deploy staging:
+  stage: Deploy staging
+  environment:
+    name: staging
+    
+ 
+ deploy prod:
+  stage: Deploy prod
+  environment:
+    name: prod
+    
+    
+deploy review:
+  stage: Deploy review
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    
+    
