@@ -1,45 +1,76 @@
-ages:
+
+stages:
   - Build image
   - Test acceptation
   - Release image
-  - Deploy review
   - Deploy staging
   - Deploy prod
 
-docker-build:
+build:
   # Official docker image.
-  image: docker:latest
   stage: Build image
-  services:
-    - docker:dind
   script:
-    - docker build -t.
+    - docker build -t gestioncinema .
+    - docker save gestioncinema  > gestioncinema.tar
+  artifacts:
+    paths:
+      - gestioncinema .tar
+  tags:
+         gestioncinema
+
 
 test acceptation:
-  # Official docker image.
+  # test acceptation
   stage: Test acceptation
   script:
-    - docker load 
+    - docker load < gestioncinema.tar
+    - docker run -d -p 80:8001 -e PORT=8001 --name webapp gestioncinema 
+    - sleep 5
+    - apk --no-cache add curl
+    - curl "http://docker" | grep -q "gestioncinema "
 
 release image:
+ # release image
   stage: Release image
   script:
-  
+    - docker load < gestioncinema.tar
+    - docker tag gestioncinema"${IMAGE_NAME}:${CI_COMMIT_REF_NAME}"
+    - docker tag gestioncinema"${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}"
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker push "${IMAGE_NAME}:${CI_COMMIT_REF_NAME}"
+    - docker push "${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}"
+
 deploy staging:
+ # deploy staging
   stage: Deploy staging
+    -  
   environment:
     name: staging
+    url: https://gestioncinema-staging.herokuapp.com
+  only:
+    - master
+  script:
+    - apk --no-cache add npm
+    - npm install -g heroku
+    - heroku container:login
+    - heroku create gestioncinema-staging || echo "project already exist"
+    - heroku container:push -a gestioncinema-staging web
+    - heroku container:release -a gestioncinema-staging web
     
  
  deploy prod:
-  stage: Deploy prod
+ # deploy prod
+ stage: Deploy prod
+ image: dtzar/helm-kubectl:3.3.4
   environment:
-    name: prod
-    
-    
-deploy review:
-  stage: Deploy review
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    
-    
+    name: prod gestioncinema-prod.com
+    url: gestioncinema-prod.com
+  only:
+    - master
+  script:
+    - apk --no-cache add npm
+    - apt-get install -g heroku
+    - heroku container:login
+    - heroku create gestioncinema-prod  || echo "project already exist"
+    - heroku container:push -a gestioncinema-prod web
+    - heroku container:release -a gestioncinema-prod web
