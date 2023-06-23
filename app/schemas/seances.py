@@ -1,24 +1,25 @@
-rom pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, HttpUrl
 
 from typing import Sequence
 
 
 class SeancesBase(BaseModel):
-    label: str
-    source: str
-    url: HttpUrl
+    id: int
 
 
 class SeancesCreate(SeancesBase):
-    label: str
-    source: str
-    url: HttpUrl
+    date: str
     submitter_id: int
 
 
 class SeancesUpdate(SeancesBase):
-    label: str
+    heure: int
 
+class SeancesUpdate(SeancesBase):
+    id_films: int
+
+class SeancesUpdate(SeancesBase):
+    id_salle: int
 
 # Properties shared by models stored in DB
 class SeancesInDBBase(SeancesBase):
@@ -32,7 +33,13 @@ class SeancesInDBBase(SeancesBase):
 # Properties to return to client
 class Seances(SeancesInDBBase):
     pass
+# Properties to return to client
+class Seances(SeancesInDBBase):
+    pass
 
+# Properties to return to client
+class Seances(SeancesInDBBase):
+    pass
 
 # Properties properties stored in DB
 class SeancesInDB(SeancesInDBBase):

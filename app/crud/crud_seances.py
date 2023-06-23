@@ -3,8 +3,8 @@ from app.models.Seances import Seances
 from app.schemas.Seances import SeancesCreate, SeancesUpdate
 
 
-class CRUDSeances(CRUDBase[Seances, SeancesCreate, SeancesUpdate]):
+class CRUDSeances(CRUDBase[Film, SeancesCreate, Update]):
     ...
 
 
-film = CRUDSeances(Seances)
+SEANCES = CRUDSeances(Seances)
