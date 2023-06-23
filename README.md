@@ -5,7 +5,6 @@
 3. Initialize de db migration and configure `alembic init alembic` https://www.youtube.com/watch?v=bfelC61XKO4
 create a revision with alembic 
 `alembic revision -m "create table film and user"`
-
 modifier les fichier d'alembic pour adapter vos scritps de migrations
 
 4. Run the DB migrations via poetry `poetry run python prestart.py` (only required once) (Unix users can use

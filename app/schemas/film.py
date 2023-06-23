@@ -5,20 +5,23 @@ from typing import Sequence
 
 class FilmBase(BaseModel):
     label: str
-    source: str
+    summary: str
     url: HttpUrl
 
 
 class FilmCreate(FilmBase):
     label: str
-    source: str
+    summary: str
     url: HttpUrl
     submitter_id: int
 
 
 class FilmUpdate(FilmBase):
-    label: str
+    id: int
 
+class FilmUpdateRestricted(BaseModel):
+    id: int
+    label: str
 
 # Properties shared by models stored in DB
 class FilmInDBBase(FilmBase):
