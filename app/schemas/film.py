@@ -18,6 +18,9 @@ class FilmCreate(FilmBase):
 
 class FilmUpdate(FilmBase):
     id: int
+    label: str
+    summary: str
+    url: HttpUrl
 
 class FilmUpdateRestricted(BaseModel):
     id: int
@@ -44,3 +47,6 @@ class FilmInDB(FilmInDBBase):
 
 class FilmSearchResults(BaseModel):
     results: Sequence[Film]
+
+class FilmDelete(FilmBase):
+    id: int
