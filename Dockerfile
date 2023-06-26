@@ -1,20 +1,24 @@
-FROM python3:nom_code # de python3 vers nom_code ou on va retrouver l'image à compiler 
+FROM dfs154/python3.8.10:base-images
 
-LABEL version = V1.0.0 # pour définir la version de l'image
+RUN mkdir /app
+#repertoire de travail app
+WORKDIR /app 
 
-ENV FLASK_ENV = dev # variable d'environnement de développement ici c'est dev la variable
+ #Copie du conteu du répertoire courant vers le dossier/app par exemple ceci peut etre changer au besoin
+ COPY . /app/
+# pour définir la version de limage
+LABEL version = V1.0.0  
 
+EXPOSE 8001
+RUN  apt-get update
+RUN  apt-get install pip 
+RUN pip install poetry 
+RUN poetry install 
+#ici le processus est déclaré de manière à écouter sur toutes les interfaces
+    #CMD ["flask","run","--host = 0.0.0.0"] 
 
-RUN SK_ENV = poésie ./run.sh -r poésie run python app/main.py
+    #permet de definir les volumes qui vont etre utiliser dans notre image
 
-EXPOSER 8001
-
-CMD ["flask","run","--host = 0.0.0.0"] #ici le processus est déclaré de manière à écouter sur toutes les interfaces
-
-WORKDIR /app #repertoire de travail app
-
-COPY . /app/ # Copie du conteu du répertoire courant vers le dossier/app par exemple ceci peut etre changer au besoin
-
-
-VOLUME ["/var/www","/var/log/apache2","/etc/apache2"] #permet de definir les volumes qui vont etre utiliser dans notre image
-
+VOLUME ["/var/www","/var/log/apache2","/etc/apache2"] 
+  #pour executer lapplication
+CMD poetry run python app/main.py
