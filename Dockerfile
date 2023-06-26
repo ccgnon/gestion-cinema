@@ -7,7 +7,6 @@ ENV FLASK_ENV = dev # variable d'environnement de développement ici c'est dev l
 
 RUN SK_ENV = poésie ./run.sh -r poésie run python app/main.py
 
-
 EXPOSER 8001
 
 CMD ["flask","run","--host = 0.0.0.0"] #ici le processus est déclaré de manière à écouter sur toutes les interfaces
