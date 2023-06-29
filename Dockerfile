@@ -1,7 +1,7 @@
-FROM dfs154/python3.8.10:base-images
+FROM python:3.8.17
 
-RUN mkdir /app
 #repertoire de travail app
+
 WORKDIR /app 
 
  #Copie du conteu du répertoire courant vers le dossier/app par exemple ceci peut etre changer au besoin
@@ -10,10 +10,8 @@ WORKDIR /app
 LABEL version = V1.0.0  
 
 EXPOSE 8001
-RUN  apt-get update
-RUN  apt install python3-pip -y 
-RUN pip install poetry 
-RUN poetry install 
+RUN  apt-get update && pip install poetry && poetry install
+
 #ici le processus est déclaré de manière à écouter sur toutes les interfaces
     #CMD ["flask","run","--host = 0.0.0.0"] 
 
