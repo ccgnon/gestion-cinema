@@ -1,0 +1,6 @@
+from app.crud.base import CRUDBase
+from app.models.reservation import Reservation
+from app.schemas.reservation_schema import reservationBase[]
+
+
+class CRUDReservation(CRUDBase[]):
