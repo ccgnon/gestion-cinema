@@ -1,0 +1,16 @@
+stages:
+  - build
+buid image:
+  stage: build
+  image: docker
+  services: 
+       - name: docker:24.0.2-dind-alpine3.18
+         alias: docker
+
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA ./films
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+  only:
+    - main
+
