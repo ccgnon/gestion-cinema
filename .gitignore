@@ -1,0 +1,10 @@
+.idea/
+.venv/
+films/app/__pycache__/
+films/app/api/__pycache__/
+films/app/core/__pycache__/
+films/app/crud/__pycache__/
+films/app/db/__pycache__/
+films/app/models/__pycache__/
+films/app/schemas/__pycache__/
+
