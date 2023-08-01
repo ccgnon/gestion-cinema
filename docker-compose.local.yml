@@ -10,7 +10,7 @@ services:
       # This optional variable can be used to define another location -
       # like a subdirectory - for the database files.
       - PGDATA=/var/lib/postgresql/data/pgdata
-      - POSTGRES_SERVER=db
+      - POSTGRES_SERVER=localhost
       # This optional environment variable is used in conjunction with POSTGRES_PASSWORD
       # to set a user and its motDePasse. This variable will create the specified user with superuser
       # power and a database with the same name. If it is not specified, then the default user of
@@ -19,7 +19,7 @@ services:
       # This environment variable is required for you to use the PostgreSQL image.
       # It must not be empty or undefined. This environment variable sets the superuser
       # motDePasse for PostgreSQL. The default superuser is defined by the POSTGRES_USER environment variable.
-      - POSTGRES_PASSWORD=motDePasse
+      - POSTGRES_PASSWORD=password
       - POSTGRES_DB=app
 
   # cast-service:
@@ -47,11 +47,11 @@ services:
     ports:
       - "8001:8001"
     volumes:
-      - ./films/app:/app
-      - ./films/assets:/assets
+      - ./backend/app:/app
+      - ./backends/assets:/assets
     environment:
-      - DATABASE_URL=postgresql://postgres:motDePasse@db:5432/app
-      - DATABASE_TEST_URL=postgresql://postgres:motDePasse@db:5432/app_test
+      - DATABASE_URL=postgresql://postgres:motDePasse@localhost:5432/app
+      - DATABASE_TEST_URL=postgresql://postgres:motDePasse@localhost:5432/app_test
       - BACKEND_CORS_ORIGINS=["http://localhost:3000","http://localhost:8000"]
 volumes:
   app-db-data:
